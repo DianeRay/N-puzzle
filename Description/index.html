@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.6  (Linux)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20140128;14571900">
+	<STYLE TYPE="text/css">
+	<!--
+		H1 { margin-left: 0.21in; margin-right: 0.21in; color: #000000; font-family: "Geneva", "Arial", "Helvetica", sans-serif; text-align: center }
+		P { margin-left: 0.21in; margin-right: 0.21in; color: #000000; font-family: "Geneva", "Arial", "Helvetica", sans-serif }
+		H2 { margin-left: 0.21in; margin-right: 0.21in; color: #000000; font-family: "Geneva", "Arial", "Helvetica", sans-serif }
+		A:link { color: #1a41a8 }
+		A:visited { color: #1a41a8 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#1a41a8" VLINK="#1a41a8" BGCOLOR="#ffffff" DIR="LTR">
+<H1>AI -- Project 1: Sliding Puzzle</H1>
+<P>
+In this project, you will implement A* for the sliding puzzle game.
+The game is played on an <tt>n x m</tt>
+board. Tiles are arranged in a random order with one spot left empty. 
+A neighboring tile can move to the empty square. 
+The objective of the game is to sort the tiles in increasing order.
+</P>
+<P>
+As part of the project, you will implement A* search. You will also implement three admissible heuristic functions
+to guide the A* search.
+<UL>
+<LI><P STYLE="margin-bottom: 0in">Heuristic 1 should be the  <a href="https://heuristicswiki.wikispaces.com/Misplaced+Tiles">Misplaced Tiles heuristic</a></P></LI>
+<LI><P STYLE="margin-bottom: 0in">Heuristic 2 should be the <a href="https://heuristicswiki.wikispaces.com/Manhattan+Distance">Manhattan Distance heuristic</a></P></LI>
+<LI><P STYLE="margin-bottom: 0in">Heuristic 3 can be Linear Conflict, Pattern Database, Nilsson's Sequence Score, N-MaxSwap, X-Y, TilesOut (go <a href="https://heuristicswiki.wikispaces.com/N+-+Puzzle">here</a> for more information on these heuristics). You can also implement your own heuristic, which should perform nearly as well or better than Heuristic 1 or Heuristic 2. Make sure to clearly describe what your heuristic does.</P></LI>
+</UL>
+</P>
+
+<P>Your code should support the following interface
+<UL>
+<LI>RunPuzzleSolver fnamePuzzle heuristic tmax fnameMoves</LI>
+</UL>
+where
+<UL>
+<LI>RunPuzzleSolver is the name of the program </LI>
+<LI>fnamePuzzle is the name of the input file containing the puzzle description</LI>
+   <UL>
+      <LI>the input file format is as follows:</LI>
+      <LI><tt>nrRows nrCols val_0 val_1 ... val_N</tt></BR>
+         where
+         <UL> 
+           <LI><tt>nrRows</tt> specifies the number of rows</LI>
+           <LI><tt>nrCols</tt> specifies the number of columns</LI>
+           <LI><tt>val_i</tt> specifies the value of the i-th square, where i ranges from 0 to N=nrRowsxnrCols -1</LI>
+            <LI>values are listed row by row, so the i-th square is located in row <tt>i / nrCols</tt>
+                and column <tt>i mod nrCols</tt></LI> 
+         </UL>
+      </LI>
+	       
+   </UL>
+<LI>heuristic is the name of the heuristic where
+   <UL>
+      <LI>H1 is used to denote Heuristic 1</LI> 
+      <LI>H2 is used to denote Heuristic 2</LI> 
+      <LI>H3 is used to denote Heuristic 3</LI> 
+   </UL>
+</LI>
+<LI>tmax is the maximum runtime in seconds
+  <UL>
+   <LI>this is an upper limit on the runtime for your A* search. When this time limit is reached,
+	    your A* search should stop. If it has not found a solution, it should report failure.
+   </LI>
+  </UL>
+</LI>
+
+<LI>fnameMoves is the name of the file where you should write the moves found by the search
+  <UL>
+   <LI>Use 0, 1, 2, 3 for left, right, up, and down moves.</LI>
+	<LI>File should be just a sequence of 0, 1, 2, 3 written one per line.For example</BR>
+      <tt>0</tt></BR>
+      <tt>3</tt></BR>
+      <tt>1</tt></BR>
+      <tt>1</tt></BR>
+   </LI>
+  </UL>
+</LI>
+</UL>
+</P>
+
+<P>Support code is provided in C++. The support code provides a graphical interface to display the puzzle and the solution. It also has functionality to generate random configurations for the sliding puzzle game. The support code has placeholders where you can add your heuristic and A* implementations. It already implements the puzzle, including the move functions.</P> 
+
+<UL>
+<LI> generate random configuration for the sliding puzzle: </BR>
+<tt>./bin/Runner RunRandomPuzzle nrRows nrCols nrRandMoves fnameOut</tt> </BR></BR>
+  (on Windows use <tt>bin\Debug\Runner</tt> instead of <tt>./bin/Runner</tt>)</BR></BR>
+</LI>
+<LI> solve the sliding puzzle (you must implement PuzzleSolver and Puzzle Heuristics): </BR>
+<tt>./bin/Runner RunPuzzleSolver fnameBoard heuristic tmax fnameMoves</tt>
+</LI>
+<LI> graphical display: </BR>
+<tt>./bin/Runner GRunPuzzle nrRows nrCols nrRandMoves tmax</tt></BR>
+once the graphical display is up, press the keys shown below for more functionality:</BR>
+<UL>
+<LI>	r : randomize puzzle board</LI>
+<LI>0 : solve puzzle using the zero heuristic</LI>
+<LI>1 : solve puzzle using heuristic1</LI>
+<LI>2 : solve puzzle using heuristic2</LI>
+<LI>3 : solve puzzle using heuristic3</LI>
+<LI>+ : go over the solution one move at a time</LI>
+<LI>p : read puzzle board from file puzzle.txt</LI>
+<LI>m : read moves from file moves.txt</LI>
+<LI>ARROW_LEFT  : make left move</LI>
+<LI>ARROW_RIGHT : make right move</LI>
+<LI>ARROW_UP    : make up move</LI>
+<LI>ARROW_DOWN  : make down move</LI>
+</UL>
+
+</LI>
+
+</UL>
+
+<P>Follow the directions below for compiling the support code</P>
+
+
+<H2><A NAME="sec_compiling2"></A>Support Code: C++ in Linux/Mac OS</H2>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">Linux: Install cmake, g++, and freeglut 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">MacOS: Install gcc. The easiest
+	way is to download the Apple Developer Tools from
+	<A HREF="http://connect.apple.com/">http://connect.apple.com</A>
+	(free, but requires registration). You can also install gcc through
+	a package manager such as MacPorts or Fink 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Open terminal and change to the
+	directory where you have placed BugCPP 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Run <B>cmake .</B> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Run <B>make</B> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">If there are no errors, then
+	everything went fine. You are ready to execute the program 
+	</P></LI>
+	<LI><P STYLE="margin-bottom: 0in">Execute the program as already described
+	</P></LI>
+</UL>
+<H2><A NAME="sec_compiling1"></A>Support Code: C++ in Windows</H2>
+<UL>
+       	<LI><P STYLE="margin-bottom: 0in">Install <A HREF="http://www.cmake.org/">CMake</A></P></LI>   
+	<LI><P STYLE="margin-bottom: 0in">Install <A HREF="http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express">Microsoft
+	Visual C++ Express Edition 2010</A> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Open command prompt and change to
+	the directory where you have placed SupportCode 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Run <B>cmake -G &quot;Visual
+	Studio 10&quot;</B> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Go to the Support folder and double
+	click on the solution file. This will open up the Visual Studio 10 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Build the project by going to
+	Project and selecting the Build option 
+	</P>
+	
+	<LI><P STYLE="margin-bottom: 0in">If there are no errors, then
+	everything went fine. You are ready to execute the program 
+	</P></LI>
+	<LI><P STYLE="margin-bottom: 0in">Execute the program as already described</B> 
+	</P></LI>
+</UL>
+</BODY>
+</HTML>
